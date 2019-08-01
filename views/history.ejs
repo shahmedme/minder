@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        Akash Dashboard
+    </title>
+    <!-- Favicon -->
+    <link href="./assets/img/online-payment.png" rel="icon" type="image/png">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+    <!-- Icons -->
+    <link href="./assets/js/plugins/nucleo/css/nucleo.css" rel="stylesheet" />
+    <link href="./assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="./assets/css/argon-dashboard.css?v=1.1.0" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Ubuntu", sans-serif;
+        }
+
+        input,
+        select,
+        textarea {
+            font-family: "Ubuntu", sans-serif;
+        }
+
+        .credits {
+            padding: 20px;
+            font-size: 25px;
+        }
+
+        .credits a {
+            color: #4FB0C6;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .card {
+            position: relative;
+            color: white;
+            transform-style: preserve-3d;
+            transition: 0.5s ease-in-out;
+            widtH: 400px;
+            height: 250px;
+            margin: auto;
+            z-index: 2;
+            background: transparent;
+        }
+
+        @media(max-widtH: 500px) {
+            .card {
+                widtH: 300px;
+                height: 187.5px;
+            }
+        }
+
+        .card:hover,
+        .card.flip {
+            transform: rotateY(180deg);
+        }
+
+        .card.flip:hover {
+            transform: rotateY(0deg);
+        }
+
+        .card .front,
+        .card .back {
+            widtH: 400px;
+            height: 250px;
+            background: linear-gradient(-45deg, #4FB0C6, #3e79be);
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: 0.5s ease-in-out;
+        }
+
+        @media(max-widtH: 500px) {
+
+            .card .front,
+            .card .back {
+                widtH: 300px;
+                height: 187.5px;
+            }
+        }
+
+        .card .front:after,
+        .card .back:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            widtH: 400px;
+            height: 250px;
+            transition: 0.5s ease-in-out;
+            z-index: -1;
+            opacity: 0.15;
+            background-image: url("http://image.flaticon.com/icons/svg/126/126511.svg");
+            background-repeat: no-repeat;
+            background-size: 75%;
+            background-position: 150px center;
+        }
+
+        @media(max-widtH: 500px) {
+
+            .card .front:after,
+            .card .back:after {
+                widtH: 300px;
+                height: 187.5px;
+            }
+        }
+
+        .card .front {
+            z-index: 5;
+            transform: rotateY(0deg);
+        }
+
+        .card .back {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transform: rotateY(180deg);
+        }
+
+        .card .back .label {
+            font-size: 12.5px;
+            font-weight: bold;
+            color: rgba(233, 245, 248, 0.85);
+            margin-right: 5px;
+        }
+
+        .card .back .top {
+            padding-top: 40px;
+            transition: 0.5s ease-in-out;
+        }
+
+        @media (max-width: 500px) {
+            .card .back .top {
+                padding-top: 15px;
+            }
+        }
+
+        .card .back .top .magstripe {
+            width: 100%;
+            height: 50px;
+            background: #333;
+        }
+
+        .card .back .middle {
+            margin-top: -40px;
+            padding: 0 20px;
+            text-align: right;
+        }
+
+        .card .back .middle .cvc {
+            width: 100%;
+            height: 40px;
+            background: white;
+            color: black;
+            line-height: 40px;
+            padding: 0 10px;
+            border-radius: 10px;
+        }
+
+        .card .front {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card .front .middle .cd-number p {
+            margin-bottom: 0;
+        }
+
+        .card .front .middle .cd-number p span {
+            margin-right: 20px;
+            font-size: 25px;
+            @media(max-widtH: 500px);
+            font-size: 20px;
+        }
+
+        .card .front .bottom {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card .front .bottom .cardholder .label,
+        .card .front .bottom .expires .label {
+            font-size: 12.5px;
+            font-weight: bold;
+            color: rgba(233, 245, 248, 0.85);
+        }
+
+        .card .front .top {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .card .front .top .cardType svg,
+        .card .front .top .cardType img {
+            width: 70px;
+            height: 50px;
+            transition: 0.5s ease-in-out;
+        }
+
+        @media(max-widtH: 500px) {
+
+            .card .front .top .cardType svg,
+            .card .front .top .cardType img {
+                width: 50px;
+                height: 35px;
+            }
+        }
+
+        .card .front .top .chip {
+            width: 70px;
+            height: 50px;
+            background: linear-gradient(-45deg, #e1e7ed, #9baec8);
+            position: relative;
+            border-radius: 5px;
+            transition: 0.5s ease-in-out;
+        }
+
+        @media(max-widtH: 500px) {
+            .card .front .top .chip {
+                width: 50px;
+                height: 35px;
+            }
+        }
+
+        .card .front .top .chip:after {
+            content: "";
+            display: block;
+            width: 50px;
+            height: 30px;
+            transition: 0.5s ease-in-out;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #5a79a3;
+            opacity: 0.35;
+            border-radius: 5px;
+        }
+
+        @media(max-widtH: 500px) {
+            .card .front .top .chip:after {
+                width: 35px;
+                height: 20px;
+            }
+        }
+
+        .form {
+            width: 450px;
+            margin: auto;
+            padding: 20px;
+            box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.35);
+            margin-top: -20px;
+            border-radius: 10px;
+            transition: 0.5s ease-in-out;
+        }
+
+        .form button.submit {
+            display: block;
+            padding: 20px 5px;
+            width: 100%;
+            margin-top: 20px;
+            background: #2b90d9;
+            color: white;
+            border-radius: 5px;
+            outline: 0;
+            border: none;
+            transition: 0.15s ease-in-out;
+        }
+
+        .form button.submit:hover {
+            background: #2689d2;
+        }
+
+        @media(max-widtH: 500px) {
+            .form {
+                width: 300px;
+                margin-top: -25px;
+            }
+        }
+
+        .form input,
+        .form select {
+            padding: 10px 5px;
+            border-radius: 5px;
+            outline: 0;
+            border: none;
+            box-shadow: 0px 0px 5px #2b90d9;
+        }
+
+        .form .cd-validate {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form .cd-validate .expiration {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .form .cd-validate .expiration .field:last-child {
+            margin-left: 10px;
+        }
+
+        .form .cd-validate .cvc {
+            text-align: right;
+        }
+
+        .form .cd-validate .cvc input#cvc {
+            width: 50px;
+        }
+
+        .form .cd-validate label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form .cd-holder {
+            margin: 20px 0;
+        }
+
+        .form .cd-holder label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form .cd-holder input {
+            width: 100%;
+        }
+
+        .form .cd-numbers {
+            margin: 20px 0;
+        }
+
+        .form .cd-numbers label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .form .cd-numbers .fields {
+            display: flex;
+        }
+
+        .form .cd-numbers .fields input {
+            width: 100%;
+            margin: 0 10px;
+        }
+
+        .form .cd-numbers .fields input:first-child {
+            margin-left: 0;
+        }
+
+        .form .cd-numbers .fields input:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+
+<body class="">
+    <%- include('./partials/navbar'); -%>
+    <div class="main-content">
+        <!-- Navbar -->
+        <%- include('./partials/header'); -%>
+        <!-- End Navbar -->
+        <!-- Header -->
+        <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+        </div>
+        <div class="container-fluid mt--7">
+            <div class="row my-5">
+                
+            </div>
+            <!-- Footer -->
+            <%- include('./partials/footer'); -%>
+        </div>
+    </div>
+    <!--   Core   -->
+    <script src="./assets/js/plugins/jquery/dist/jquery.min.js"></script>
+    <script src="./assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <!--   Optional JS   -->
+    <script src="./assets/js/plugins/chart.js/dist/Chart.min.js"></script>
+    <script src="./assets/js/plugins/chart.js/dist/Chart.extension.js"></script>
+    <!--   Argon JS   -->
+    <script src="./assets/js/argon-dashboard.min.js?v=1.1.0"></script>
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+</body>
+
+</html>
