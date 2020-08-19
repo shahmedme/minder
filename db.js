@@ -5,9 +5,9 @@ const config = mysql.createConnection({
 	port: "3306",
 	user: "root",
 	password: "",
-	database: "akash"
+	database: "minder",
 });
 
 module.exports = {
-	config
+	config,
 };
